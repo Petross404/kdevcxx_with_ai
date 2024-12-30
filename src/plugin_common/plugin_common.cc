@@ -22,6 +22,7 @@
 #include <aiprocess/log.h>
 #include <aiprocess/app_settings.h>
 #include <ai_processing.h>
+#include <aiwidget.h>
 #include <simple_enum/enum_index.hpp>
 #include <stralgo/stralgo.h>
 #include <future>
@@ -121,6 +122,9 @@ auto process_with_ai(KTextEditor::View & view, aiprocess::app_settings_t const &
 
   if(new_text.empty()) [[unlikely]]
     return;
+
+  auto* aiwidget{new AIWidget(&view, document, Qt::ToolTip | Qt::FramelessWindowHint)};
+  aiwidget->show();
 
   document->replaceText(view.selectionRange(), QString::fromStdString(new_text));
   debug("document->replaceText called ...");
